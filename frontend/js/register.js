@@ -1,8 +1,7 @@
 let form1 = document.querySelector('#form1');
-
-let inputs = form1.children;
+let inputs = document.querySelectorAll('#form1 input');
 let userData = [];
-for (let i = 0; i < inputs.length - 1; i++) {
+for (let i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('input', () => {
         userData[i] = inputs[i].value;
     })

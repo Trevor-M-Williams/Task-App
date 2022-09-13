@@ -5,7 +5,7 @@ let user;
 getMe().then((data) => {
     user = data;
     let userName = document.querySelector('#user-name');
-    userName.innerHTML = `${user.name}`;
+    userName.innerHTML = `${user.name.toUpperCase()}`;
 })
 
 let goals = document.querySelector('.goals');
@@ -55,6 +55,22 @@ async function deleteGoal(data) {
     return response.json();
 }
 
+async function editGoal(data, container) {
+    // const response = await fetch(`http://localhost:5000/api/goals/${data._id}`, { 
+    //     method: 'PUT',
+    //     headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'Bearer ' + token
+    //     },
+    // });
+    // return response.json();
+
+    let input = document.createElement('input');
+    input.classList.add('edit-input');
+    container.append(input);
+
+}
+
 async function getGoals() {
     const response = await fetch('http://localhost:5000/api/goals', {
         method: 'GET',
@@ -80,22 +96,28 @@ async function getMe() {
 function appendGoal(data) {
     let container = document.createElement('div');
     let goal = document.createElement('div');
+    let editDelete = document.createElement('div');
+    let editBtn = document.createElement('div');
     let deleteBtn = document.createElement('div');
     container.classList.add('goal-container')
     goal.classList.add('goal');
     goal.innerHTML = data.text;
+    editDelete.classList.add('edit-delete');
+    editBtn.classList.add('edit-goal');
+    editBtn.onclick = () => {
+        editGoal(data, container);
+    }
     deleteBtn.classList.add('delete-goal');
-    deleteBtn.innerHTML = 'X';
     deleteBtn.onclick = () => {
         deleteGoal(data)
         .then(data => {
             if (data.id) {
-                let deleteContainer = deleteBtn.parentElement;
-                deleteContainer.remove();
+                container.remove();
             }
         })
     }
-    container.append(goal, deleteBtn);
+    editDelete.append(editBtn, deleteBtn);
+    container.append(goal, editDelete);
     goals.append(container);
     goalInput.value = '';
 }

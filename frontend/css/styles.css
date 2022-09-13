@@ -2,48 +2,122 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 body {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+a, button {
+    background-color: #eee;
+    padding: 5px 10px;
+    border: 0.5px solid #666;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover, button:hover {
+    background-color: #ccc;
+}
 form {
+    height: 500px;
+    width: 350px;
+    padding: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
+    box-shadow: 0px 0px 20px 1px #ccc;
+    border-radius: 10px;
 }
-form input {
+#form3 {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    padding: 20px;
+    margin: 13vh 0 5vh 0;
+}
+form h1 {
     margin-bottom: 10px;
 }
-button {
-    margin: 5px;
+form input {
+    height: 30px;
+    width: 100%;
+    margin: 10px 0;
+    padding: 0 5px;
+}
+form button {
+    margin: 20px 0;
 }
 
 .nav {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.goals {
-    display: flex;
-    flex-direction: column;
-}
-.goal-container {
+    position: fixed;
+    top: 0;
+    width: min(95%, 1000px);
+    height: 8vh;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.goals {
+    width: min(95%, 800px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.goal-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    border-bottom: 1px solid black;
 }
 .goal {
+    height: 100%;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+.edit-delete {
     display: flex;
 }
 .delete-goal {
-    padding: 0px 5px;
-    color: red;
-    font-weight: 600;
+    height: 40px;
+    width: 40px;
+    background-image: url('../images/trash.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
     cursor: pointer;
-    border-left: 1px solid black;
+}
+.edit-goal {
+    height: 40px;
+    width: 40px;
+    background-image: url('../images/edit.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+.edit-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: calc(100% - 70px);
+    border: none;
+    outline: none;
+}
+.edit-input:focus{
+    outline: none;
 }
