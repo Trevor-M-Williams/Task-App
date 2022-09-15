@@ -1,35 +1,23 @@
 let token = localStorage.getItem('token');
 if (!token) window.location = 'login.html';
 
-let user;
-getMe().then((data) => {
-    user = data;
-    let userName = document.querySelector('#user-name');
-    userName.innerHTML = `${user.name.toUpperCase()}`;
-})
+let goal;
+let category;
+let categories = ['luminate', 'personal', 'task app'];
+let editing = false;
 
 let goals = document.querySelector('.goals');
-getGoals().then((data) => {
-    data.forEach((e) => {
-        appendGoal(e);
-    })
-})
+let categoryDivs = document.querySelector('.categories').children;
 
-let form3 = document.querySelector('#form3');
-let goal;
-let goalInput = form3.children[0];
-goalInput.addEventListener('input', () => {
-    goal = goalInput.value;
-})
-
-form3.addEventListener('submit', (e) => {
-    e.preventDefault();
-    addGoal({text: goal})
-    .then((data) => {
-        if (data.text) {
-            appendGoal(data);
-        } else console.log('Please enter a goal')
+for (let i = 0; i < categoryDivs.length; i++) {
+    categoryDivs[i].addEventListener('click', () => {
+        selectCategory(i);
     })
+}
+
+getMe().then((data) => {
+    let userName = document.querySelector('#user-name');
+    userName.innerHTML = `${data.name.toUpperCase()}`;
 })
 
 async function addGoal(data) {
@@ -55,20 +43,16 @@ async function deleteGoal(data) {
     return response.json();
 }
 
-async function editGoal(data, container) {
-    // const response = await fetch(`http://localhost:5000/api/goals/${data._id}`, { 
-    //     method: 'PUT',
-    //     headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': 'Bearer ' + token
-    //     },
-    // });
-    // return response.json();
-
-    let input = document.createElement('input');
-    input.classList.add('edit-input');
-    container.append(input);
-
+async function editGoal(data, text) {
+    const response = await fetch(`http://localhost:5000/api/goals/${data._id}`, { 
+        method: 'PUT',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(data)
+    });
+    return response.json();
 }
 
 async function getGoals() {
@@ -93,37 +77,107 @@ async function getMe() {
     return response.json();
 }
 
+function addNewContainer() {
+    appendGoal();
+    let container = goals.lastElementChild;
+    let newBtn = document.createElement('div');
+    newBtn.classList.add('new-goal-button');
+    newBtn.innerHTML = '+';
+    newBtn.onclick = () => getInput(null, container);
+    container.append(newBtn);
+}
+
 function appendGoal(data) {
     let container = document.createElement('div');
-    let goal = document.createElement('div');
+    let goalDiv = document.createElement('div');
+
+    container.classList.add('goal-container')
+    goalDiv.classList.add('goal');
+
+    container.append(goalDiv);
+    goals.append(container);
+
+    if (data) {
+        goalDiv.innerHTML = data.text;
+        handleButtons(data, container);
+    }
+
+    // goalInput.value = '';
+}
+
+function getInput(data, container) {
+    let goalDiv = container.children[0];
+    let input = document.createElement('input');
+    input.classList.add('edit-input');
+    input.value = goalDiv.innerHTML;
+    container.append(input);
+    input.focus();
+    input.addEventListener('keydown', (e) => {
+        if (e.code === 'Enter') input.blur();
+    })
+    input.addEventListener('focusout', (e) => {
+        if (input.value !== '') {
+            let text = input.value;
+            goalDiv.innerHTML = text;
+            if (data) {
+                data.text = text;
+                editGoal(data);
+            } else {
+                addGoal({text, category}).then((data) => handleButtons(data, container));
+                let newBtn = document.querySelector('.new-goal-button');
+                newBtn.remove();
+                addNewContainer();
+            }
+            input.remove();
+        }
+    });
+}
+
+function handleButtons(data, container) {
     let editDelete = document.createElement('div');
     let editBtn = document.createElement('div');
     let deleteBtn = document.createElement('div');
-    container.classList.add('goal-container')
-    goal.classList.add('goal');
-    goal.innerHTML = data.text;
+
     editDelete.classList.add('edit-delete');
     editBtn.classList.add('edit-goal');
-    editBtn.onclick = () => {
-        editGoal(data, container);
-    }
     deleteBtn.classList.add('delete-goal');
+
+    editBtn.onclick = () => getInput(data, container);
     deleteBtn.onclick = () => {
         deleteGoal(data)
         .then(data => {
-            if (data.id) {
-                container.remove();
-            }
+            if (data.id) container.remove();
         })
     }
+
     editDelete.append(editBtn, deleteBtn);
-    container.append(goal, editDelete);
-    goals.append(container);
-    goalInput.value = '';
+    container.append(editDelete);
 }
 
 function logout() {
     localStorage.removeItem('token');
     token = null;
     window.location = 'login.html';
+}
+
+function selectCategory(i) {
+    category = categories[i];
+    let pageTitle = document.querySelector('.page-title');
+    pageTitle.textContent = category.toUpperCase();
+    let categoryContainer = document.querySelector('.categories');
+    categoryContainer.style.display = 'none';
+
+    getGoals().then((data) => {
+        let child = goals.lastElementChild; 
+        while (child) {
+            goals.removeChild(child);
+            child = goals.lastElementChild;
+        }
+
+        data.forEach((e) => {
+            if (e.category === category) appendGoal(e);
+        })
+
+        addNewContainer();
+    })
 }

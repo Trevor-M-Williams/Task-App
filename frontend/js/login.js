@@ -1,3 +1,6 @@
+let token = localStorage.getItem('token');
+if (token) window.location = 'index.html';
+
 let form2 = document.querySelector('#form2');
 let logins = document.querySelectorAll('#form2 input');
 let loginData = [];

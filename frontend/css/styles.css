@@ -8,7 +8,6 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 a, button {
@@ -25,6 +24,8 @@ a:hover, button:hover {
     background-color: #ccc;
 }
 form {
+    position: relative;
+    top: 10vh;
     height: 500px;
     width: 350px;
     padding: 50px;
@@ -34,17 +35,10 @@ form {
     box-shadow: 0px 0px 20px 1px #ccc;
     border-radius: 10px;
 }
-#form3 {
-    display: flex;
-    flex-direction: row;
-    height: auto;
-    padding: 20px;
-    margin: 13vh 0 5vh 0;
-}
 form h1 {
     margin-bottom: 10px;
 }
-form input {
+form input, form select {
     height: 30px;
     width: 100%;
     margin: 10px 0;
@@ -55,19 +49,49 @@ form button {
 }
 
 .nav {
-    position: fixed;
+    position: sticky;
     top: 0;
     width: min(95%, 1000px);
     height: 8vh;
-    padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid black;
 }
+.page-title {
+    width: min(95%, 1000px);
+    margin: 3vh 0 2vh 0;
+    font-size: min(4vw, 40px);
+    font-weight: 600;
+    letter-spacing: min(0.2vw, 2px);
+}
+.categories {
+    width: min(95%, 1000px);
+    display: none;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.categories div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: auto;
+    padding: min(10vw, 100px) 0;
+    margin: min(2vw, 16px) 0;
+    border-radius: 5%;
+    box-shadow: 0px 0px min(1vw, 10px) min(0.1vw, 1px) #ccc;
+    font-size: min(4vw, 40px);
+    font-weight: 600;
+    letter-spacing: min(0.2vw, 2px);
+    cursor: pointer;
+}
 .goals {
+    position: relative;
     width: min(95%, 800px);
-    height: 100%;
+    display: none;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,11 +99,12 @@ form button {
 .goal-container {
     position: relative;
     width: 100%;
+    min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 20px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ccc;
 }
 .goal {
     height: 100%;
@@ -116,8 +141,22 @@ form button {
     height: 100%;
     width: calc(100% - 70px);
     border: none;
-    outline: none;
+    padding: 0 10px;
+    font-size: 20px;
 }
 .edit-input:focus{
     outline: none;
+}
+.new-goal-button {
+    position: absolute;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(94, 179, 94);
+    font-size: 24px;
+    border-radius: 10%;
+    cursor: pointer;
 }
