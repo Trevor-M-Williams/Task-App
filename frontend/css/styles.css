@@ -58,6 +58,10 @@ form button {
     justify-content: space-between;
     border-bottom: 1px solid black;
 }
+.home-button {
+    width: 25px;
+    cursor: pointer;
+}
 .page-title {
     width: min(95%, 1000px);
     margin: 3vh 0 2vh 0;
@@ -90,7 +94,7 @@ form button {
 }
 .goals {
     position: relative;
-    width: min(95%, 800px);
+    width: min(95%, 1000px);
     display: none;
     display: flex;
     flex-direction: column;
@@ -113,26 +117,39 @@ form button {
     align-items: center;
     flex-grow: 1;
 }
-.edit-delete {
+.options-menu {
     display: flex;
+    justify-content: space-between;
+    padding-right: 18px;
+    position: absolute;
+    right: 0;
+    height: 30px;
+    width: 0px;
+    overflow: hidden;
+    background-color: #fff;
+    transition: width 300ms ease;
 }
-.delete-goal {
-    height: 40px;
-    width: 40px;
-    background-image: url('../images/trash.png');
+.options-button, .edit-button, .delete-button {
+    height: 30px;
+    width: 30px;
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: center;
+    border-radius: 50%;
     cursor: pointer;
 }
-.edit-goal {
-    height: 40px;
-    width: 40px;
-    background-image: url('../images/edit.png');
-    background-size: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: pointer;
+.options-button {
+    position: relative;
+    width: 20px;
+    background-image: url('../assets/images/options.svg');
+}
+.delete-button {
+    background-color: rgba(255, 0, 0, 0.741);
+    background-image: url('../assets/images/trash.png');
+}
+.edit-button {
+    background-color: rgba(0, 0, 253, 0.505);
+    background-image: url('../assets/images/edit.png');
 }
 .edit-input {
     position: absolute;
@@ -150,13 +167,13 @@ form button {
 .new-goal-button {
     position: absolute;
     left: 10px;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgb(94, 179, 94);
     font-size: 24px;
-    border-radius: 10%;
+    border-radius: 50%;
     cursor: pointer;
 }

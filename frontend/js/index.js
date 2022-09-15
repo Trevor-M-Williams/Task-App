@@ -15,11 +15,6 @@ for (let i = 0; i < categoryDivs.length; i++) {
     })
 }
 
-getMe().then((data) => {
-    let userName = document.querySelector('#user-name');
-    userName.innerHTML = `${data.name.toUpperCase()}`;
-})
-
 async function addGoal(data) {
     const response = await fetch('http://localhost:5000/api/goals', { 
         method: 'POST',
@@ -101,8 +96,6 @@ function appendGoal(data) {
         goalDiv.innerHTML = data.text;
         handleButtons(data, container);
     }
-
-    // goalInput.value = '';
 }
 
 function getInput(data, container) {
@@ -133,14 +126,34 @@ function getInput(data, container) {
     });
 }
 
+function goHome() {
+    let pageTitle = document.querySelector('.page-title');
+    let categoryContainer = document.querySelector('.categories');
+    pageTitle.textContent = '';
+    categoryContainer.style.display = 'flex';
+
+    let child = goals.lastElementChild; 
+    while (child) {
+        goals.removeChild(child);
+        child = goals.lastElementChild;
+    }
+}
+
 function handleButtons(data, container) {
-    let editDelete = document.createElement('div');
+    let optionsMenu = document.createElement('div');
+    let optionsBtn = document.createElement('div');
     let editBtn = document.createElement('div');
     let deleteBtn = document.createElement('div');
 
-    editDelete.classList.add('edit-delete');
-    editBtn.classList.add('edit-goal');
-    deleteBtn.classList.add('delete-goal');
+    optionsMenu.classList.add('options-menu');
+    optionsBtn.classList.add('options-button');
+    editBtn.classList.add('edit-button');
+    deleteBtn.classList.add('delete-button');
+
+    optionsBtn.onclick = () => {
+        if (optionsMenu.style.width === '80px') optionsMenu.style.width = '0px';
+        else optionsMenu.style.width = '80px';
+    }
 
     editBtn.onclick = () => getInput(data, container);
     deleteBtn.onclick = () => {
@@ -150,8 +163,8 @@ function handleButtons(data, container) {
         })
     }
 
-    editDelete.append(editBtn, deleteBtn);
-    container.append(editDelete);
+    optionsMenu.append(editBtn, deleteBtn);
+    container.append(optionsMenu, optionsBtn);
 }
 
 function logout() {
@@ -163,8 +176,8 @@ function logout() {
 function selectCategory(i) {
     category = categories[i];
     let pageTitle = document.querySelector('.page-title');
-    pageTitle.textContent = category.toUpperCase();
     let categoryContainer = document.querySelector('.categories');
+    pageTitle.textContent = category.toUpperCase();
     categoryContainer.style.display = 'none';
 
     getGoals().then((data) => {
