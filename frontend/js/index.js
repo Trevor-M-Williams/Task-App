@@ -16,7 +16,7 @@ for (let i = 0; i < categoryDivs.length; i++) {
 }
 
 async function addGoal(data) {
-    const response = await fetch('http://localhost:5000/api/goals', { 
+    const response = await fetch(`http://localhost:5000/api/goals`, { 
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
