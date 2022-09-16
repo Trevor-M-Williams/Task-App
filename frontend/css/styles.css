@@ -10,6 +10,9 @@ body {
     flex-direction: column;
     align-items: center;
 }
+::-webkit-scrollbar {
+    display: none;
+}
 a, button {
     background-color: #eee;
     padding: 5px 10px;
@@ -95,15 +98,18 @@ form button {
 .goals {
     position: relative;
     width: min(95%, 1000px);
+    max-height: 75vh;
     display: none;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto;
 }
 .goal-container {
     position: relative;
     width: 100%;
-    min-height: 40px;
+    height: auto;
+    padding: 5px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -111,16 +117,17 @@ form button {
     border-bottom: 1px solid #ccc;
 }
 .goal {
+    width: calc(100% - 50px);
+    min-height: 30px;
     height: 100%;
-    padding: 0 10px;
+    padding-left: 10px;
     display: flex;
     align-items: center;
-    flex-grow: 1;
 }
 .options-menu {
     display: flex;
     justify-content: space-between;
-    padding-right: 18px;
+    padding-right: 20px;
     position: absolute;
     right: 0;
     height: 30px;
@@ -156,7 +163,7 @@ form button {
     top: 0;
     left: 0;
     height: 100%;
-    width: calc(100% - 70px);
+    width: calc(100% - 50px);
     border: none;
     padding: 0 10px;
     font-size: 20px;

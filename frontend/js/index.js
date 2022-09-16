@@ -75,8 +75,7 @@ async function getMe() {
     return response.json();
 }
 
-function addNewContainer() {
-    appendGoal();
+function addNewButton() {
     let container = goals.lastElementChild;
     let newBtn = document.createElement('div');
     newBtn.classList.add('new-goal-button');
@@ -96,6 +95,7 @@ function appendGoal(data) {
     goals.append(container);
 
     if (data) {
+        goalDiv.addEventListener('dblclick', () => getInput(data, container));
         goalDiv.innerHTML = data.text;
         handleButtons(data, container);
     }
@@ -122,10 +122,11 @@ function getInput(data, container) {
                 addGoal({text, category}).then((data) => handleButtons(data, container));
                 let newBtn = document.querySelector('.new-goal-button');
                 newBtn.remove();
-                addNewContainer();
+                appendGoal();
+                addNewButton();
             }
             input.remove();
-        }
+        } else addNewButton();
     });
 }
 
@@ -145,20 +146,17 @@ function goHome() {
 function handleButtons(data, container) {
     let optionsMenu = document.createElement('div');
     let optionsBtn = document.createElement('div');
-    let editBtn = document.createElement('div');
     let deleteBtn = document.createElement('div');
 
     optionsMenu.classList.add('options-menu');
     optionsBtn.classList.add('options-button');
-    editBtn.classList.add('edit-button');
     deleteBtn.classList.add('delete-button');
 
     optionsBtn.onclick = () => {
-        if (optionsMenu.style.width === '80px') optionsMenu.style.width = '0px';
-        else optionsMenu.style.width = '80px';
+        if (optionsMenu.style.width === '50px') optionsMenu.style.width = '0px';
+        else optionsMenu.style.width = '50px';
     }
 
-    editBtn.onclick = () => getInput(data, container);
     deleteBtn.onclick = () => {
         deleteGoal(data)
         .then(data => {
@@ -166,7 +164,7 @@ function handleButtons(data, container) {
         })
     }
 
-    optionsMenu.append(editBtn, deleteBtn);
+    optionsMenu.append(deleteBtn);
     container.append(optionsMenu, optionsBtn);
 }
 
@@ -194,6 +192,7 @@ function selectCategory(i) {
             if (e.category === category) appendGoal(e);
         })
 
-        addNewContainer();
+        appendGoal();
+        addNewButton();
     })
 }
