@@ -1,3 +1,6 @@
+let url = 'https://task-app-3kig.onrender.com';
+if (window.location.origin === "http://127.0.0.1:5500") url = 'http://localhost:5000';
+
 let form1 = document.querySelector('#form1');
 let inputs = document.querySelectorAll('#form1 input');
 let userData = [];
