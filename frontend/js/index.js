@@ -4,6 +4,9 @@ if (window.location.origin === "http://127.0.0.1:5500") url = 'http://localhost:
 let token = localStorage.getItem('token');
 if (!token) window.location = 'login.html';
 
+let container = document.querySelector('.container.home');
+container.style.display = 'flex';
+
 let goal;
 let category;
 let categories = ['luminate', 'personal', 'task app'];
@@ -98,7 +101,7 @@ function appendGoal(data) {
         goalDiv.addEventListener('dblclick', () => getInput(data, container));
         goalDiv.innerHTML = data.text;
         handleButtons(data, container);
-    }
+    } else goalDiv.addEventListener('dblclick', () => getInput(null, container));
 }
 
 function getInput(data, container) {
@@ -119,7 +122,9 @@ function getInput(data, container) {
                 data.text = text;
                 editGoal(data);
             } else {
-                addGoal({text, category}).then((data) => handleButtons(data, container));
+                addGoal({text, category}).then((data) => {
+                    handleButtons(data, container);
+                });
                 let newBtn = document.querySelector('.new-goal-button');
                 newBtn.remove();
                 appendGoal();

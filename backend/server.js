@@ -20,7 +20,7 @@ app.use('/api/users', require('./routes/userRoutes'));
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../frontend')));
 
-    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'frontend', 'login.html')))
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'frontend', 'index.html')))
 }
 
 app.use(errorHandler);
