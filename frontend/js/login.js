@@ -1,3 +1,6 @@
+let url = 'https://task-app-3kig.onrender.com';
+if (window.location.origin === "http://127.0.0.1:5500") url = 'http://localhost:5000';
+
 let token = localStorage.getItem('token');
 if (token) window.location = 'index.html';
 
