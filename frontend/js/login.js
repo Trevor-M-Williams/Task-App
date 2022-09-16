@@ -26,7 +26,7 @@ form2.addEventListener('submit', (e) => {
 })
 
 async function login(data) {
-    const response = await fetch('http://localhost:5000/api/users/login', {
+    const response = await fetch(`${url}/api/users/login`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'

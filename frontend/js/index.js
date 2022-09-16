@@ -1,6 +1,9 @@
 let token = localStorage.getItem('token');
 if (!token) window.location = 'login.html';
 
+let url = 'https://task-app-3kig.onrender.com';
+if (window.location.origin === "http://127.0.0.1:5500") url = 'http://localhost:5000';
+
 let goal;
 let category;
 let categories = ['luminate', 'personal', 'task app'];
@@ -16,7 +19,7 @@ for (let i = 0; i < categoryDivs.length; i++) {
 }
 
 async function addGoal(data) {
-    const response = await fetch(`http://localhost:5000/api/goals`, { 
+    const response = await fetch(`${url}/api/goals`, { 
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -28,7 +31,7 @@ async function addGoal(data) {
 }
 
 async function deleteGoal(data) {
-    const response = await fetch(`http://localhost:5000/api/goals/${data._id}`, { 
+    const response = await fetch(`${url}/api/goals/${data._id}`, { 
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',
@@ -39,7 +42,7 @@ async function deleteGoal(data) {
 }
 
 async function editGoal(data, text) {
-    const response = await fetch(`http://localhost:5000/api/goals/${data._id}`, { 
+    const response = await fetch(`${url}/api/goals/${data._id}`, { 
         method: 'PUT',
         headers: {
         'Content-Type': 'application/json',
@@ -51,7 +54,7 @@ async function editGoal(data, text) {
 }
 
 async function getGoals() {
-    const response = await fetch('http://localhost:5000/api/goals', {
+    const response = await fetch(`${url}/api/goals`, {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',
@@ -62,7 +65,7 @@ async function getGoals() {
 }
 
 async function getMe() {
-    const response = await fetch('http://localhost:5000/api/users/me', {
+    const response = await fetch(`${url}/api/users/me`, {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',
