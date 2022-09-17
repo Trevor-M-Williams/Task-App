@@ -5,6 +5,17 @@ body {
   display: flex;
 }
 
+.nav {
+  position: fixed;
+  top: 0;
+  height: 8vh;
+  width: min(95%, 1000px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+}
+
 .nav-container {
   position: absolute;
   height: 100%;
@@ -285,6 +296,7 @@ body {
   background-color: #3898ec;
   color: #bfbfbf;
   transition: transform 250ms;
+  display: none;
 }
 
 .handle.top {

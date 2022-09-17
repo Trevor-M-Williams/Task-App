@@ -5,14 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/map.css">
     <link rel="stylesheet" href="./css/navbar.css">
     <script defer src="./js/index.js"></script>
     <script defer src="./js/menu.js"></script>
     <title>Home</title>
 </head>
 <body>
-    <div class="container home">
+    <div class="container">
 
         <div class="nav-container">
             <div class="nav-handle">
@@ -40,7 +39,7 @@
             </div>
             <div class="nav-footer-extra">
                 <div class="nav-item separator"></div>
-                <a href="#" class="nav-item bottom-item-inner dark-text w-inline-block">
+                <a onclick="logout()" class="nav-item bottom-item-inner dark-text w-inline-block">
                     <div class="nav-item-icon user-bg">
                         <div class="user-icon"><strong>J</strong></div>
                     </div>
@@ -51,11 +50,7 @@
         
         <div class="content">
             <h1 class="page-title"></h1>
-            <div class="categories">
-                <div class="luminate">LUMINATE</div>
-                <div class="personal">PERSONAL</div>
-                <div class="task-app">TASK APP</div>
-            </div>
+            <div class="categories"></div>
             <div class="goals"></div>
         </div>
     

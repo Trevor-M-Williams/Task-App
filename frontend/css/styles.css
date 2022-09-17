@@ -12,14 +12,18 @@
     width: 100%;
     display: flex;
     align-items: center;
-}
-.container.home {
     display: none;
+}
+.container2 {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 a, button {
     background-color: #eee;
     padding: 5px 10px;
-    /* border: 0.5px solid #666; */
     border-radius: 3px;
     font-size: 14px;
     color: #333;
@@ -31,7 +35,7 @@ a:hover, button:hover {
 }
 form {
     position: relative;
-    top: 10vh;
+    top: 12vh;
     height: 500px;
     width: 350px;
     padding: 50px;
@@ -53,7 +57,6 @@ form input, form select {
 form button {
     margin: 20px 0;
 }
-
 
 .content {
     position: absolute;
@@ -80,7 +83,7 @@ form button {
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.categories div {
+.category {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,7 +104,7 @@ form button {
 .goals {
     position: relative;
     width: min(95%, 1000px);
-    max-height: 75vh;
+    margin-bottom: 5vh;
     display: none;
     display: flex;
     flex-direction: column;
@@ -110,14 +113,20 @@ form button {
 }
 .goal-container {
     position: relative;
-    width: 100%;
+    width: 95%;
     height: auto;
+    margin: 5px 0;
     padding: 5px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 20px;
-    border-bottom: 1px solid #ccc;
+    border-radius: min(1vw, 10px);
+    box-shadow: 0px 0px min(0.5vw, 5px) min(0.05vw, 0.5px) #ccc;
+    cursor: pointer;
+}
+.goal-container:hover {
+    box-shadow: 0px 0px min(0.75vw, 7.5px) min(0.1vw, 1px) #3898ec;
 }
 .goal {
     width: calc(100% - 50px);
@@ -132,7 +141,7 @@ form button {
     justify-content: space-between;
     padding-right: 20px;
     position: absolute;
-    right: 0;
+    right: 5px;
     height: 30px;
     width: 0px;
     overflow: hidden;
@@ -170,6 +179,7 @@ form button {
     border: none;
     padding: 0 10px;
     font-size: 20px;
+    border-radius: min(1vw, 10px);
 }
 .edit-input:focus{
     outline: none;

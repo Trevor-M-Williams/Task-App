@@ -4,13 +4,15 @@ if (window.location.origin === "http://127.0.0.1:5500") url = 'http://localhost:
 let token = localStorage.getItem('token');
 if (!token) window.location = 'login.html';
 
-let container = document.querySelector('.container.home');
+let container = document.querySelector('.container');
 container.style.display = 'flex';
 
 let goal;
 let category;
-let categories = ['luminate', 'personal', 'task app'];
+let categories = [];
 let editing = false;
+
+getCategories();
 
 let goals = document.querySelector('.goals');
 let categoryDivs = document.querySelector('.categories').children;
@@ -78,60 +80,81 @@ async function getMe() {
     return response.json();
 }
 
-function addNewButton() {
-    let container = goals.lastElementChild;
-    let newBtn = document.createElement('div');
-    newBtn.classList.add('new-goal-button');
-    newBtn.innerHTML = '+';
-    newBtn.onclick = () => getInput(null, container);
-    container.append(newBtn);
+function createCategory(cat) {
+    let categoriesDiv = document.querySelector('.categories');
+    let categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('category');
+    categoryDiv.textContent = cat.toUpperCase();
+    categoryDiv.addEventListener('click', () => selectCategory(cat));
+    categoriesDiv.append(categoryDiv);
 }
 
-function appendGoal(data) {
+function createGoal(data) {
     let container = document.createElement('div');
     let goalDiv = document.createElement('div');
 
-    container.classList.add('goal-container')
+    container.classList.add('goal-container');
     goalDiv.classList.add('goal');
+
+    container.addEventListener('click', () => selectGoal(container));
 
     container.append(goalDiv);
     goals.append(container);
 
     if (data) {
-        goalDiv.addEventListener('dblclick', () => getInput(data, container));
-        goalDiv.innerHTML = data.text;
+        container.addEventListener('dblclick', () => getInput(data, container));
+        goalDiv.textContent = data.text;
         handleButtons(data, container);
-    } else goalDiv.addEventListener('dblclick', () => getInput(null, container));
+    } else {
+        let newBtn = document.createElement('div');
+        newBtn.classList.add('new-goal-button');
+        newBtn.textContent = '+';
+        newBtn.onclick = () => getInput(null, container);
+        container.append(newBtn);
+    }
+}
+
+function getCategories() {
+    getGoals().then(data => {
+        data.forEach(e => {
+            if (!categories.includes(e.category)) categories.push(e.category);
+        })
+
+        categories.sort();
+        categories.forEach(cat => createCategory(cat));
+    })
 }
 
 function getInput(data, container) {
     let goalDiv = container.children[0];
     let input = document.createElement('input');
     input.classList.add('edit-input');
-    input.value = goalDiv.innerHTML;
+    input.value = goalDiv.textContent;
     container.append(input);
     input.focus();
     input.addEventListener('keydown', (e) => {
         if (e.code === 'Enter') input.blur();
     })
-    input.addEventListener('focusout', (e) => {
+    input.addEventListener('focusout', () => {
         if (input.value !== '') {
             let text = input.value;
-            goalDiv.innerHTML = text;
+            goalDiv.textContent = text;
+            container.style.outline = 'none';
             if (data) {
                 data.text = text;
                 editGoal(data);
             } else {
                 addGoal({text, category}).then((data) => {
                     handleButtons(data, container);
+                    container.addEventListener('click', () => selectGoal(container));
+                    container.addEventListener('dblclick', () => getInput(data, container));
                 });
                 let newBtn = document.querySelector('.new-goal-button');
                 newBtn.remove();
-                appendGoal();
-                addNewButton();
+                createGoal();
             }
-            input.remove();
-        } else addNewButton();
+        }
+        input.remove();
     });
 }
 
@@ -179,11 +202,11 @@ function logout() {
     window.location = 'login.html';
 }
 
-function selectCategory(i) {
-    category = categories[i];
+function selectCategory(cat) {
+    category = cat;
     let pageTitle = document.querySelector('.page-title');
     let categoryContainer = document.querySelector('.categories');
-    pageTitle.textContent = category.toUpperCase();
+    pageTitle.textContent = cat.toUpperCase();
     categoryContainer.style.display = 'none';
 
     getGoals().then((data) => {
@@ -194,10 +217,20 @@ function selectCategory(i) {
         }
 
         data.forEach((e) => {
-            if (e.category === category) appendGoal(e);
+            if (e.category === category) createGoal(e);
         })
 
-        appendGoal();
-        addNewButton();
+        createGoal();
     })
+}
+
+function selectGoal(selectedGoal) {
+    let allGoals = goals.children;
+    for (let i = 0; i < allGoals.length; i++) {
+        // allGoals[i].style.boxShadow = '0px 0px min(0.5vw, 5px) min(0.05vw, 0.5px) #ccc';
+        allGoals[i].style.outline = 'none';
+    }
+    // selectedGoal.style.boxShadow = '0px 0px min(0.75vw, 7.5px) min(0.1vw, 1px) #3898ec';
+    selectedGoal.style.outline = '1.5px solid #3898ec';
+    if (selectedGoal === goals.lastElementChild) getInput(null, selectedGoal);
 }
