@@ -1,3 +1,4 @@
+let navOpen = false;
 let nav = document.querySelector('.nav-container');
 let navLogoOverlay = document.querySelector('.nav-logo-overlay');
 let navItems = document.querySelectorAll('.nav-item');
@@ -6,7 +7,6 @@ let navHandle = document.querySelector('.nav-handle');
 let navHandleTop = document.querySelector('.handle.top');
 let navHandleBot = document.querySelector('.handle.bottom');
 
-let navOpen = false;
 closeNav();
 
 let wait = (ms) => new Promise(resolve => setTimeout(resolve, ms))
@@ -62,17 +62,17 @@ function openNav() {
     }, 200)
 }
 
-let hotKeys = [false, false];
+let menuKeys = [false, false];
 
 window.addEventListener('keydown', (e) => {
-    if (e.key === 'Alt' && hotKeys[0] === false) hotKeys[0] = true;
-    else if (e.key === 'm' && hotKeys[1] === false) hotKeys[1] = true;
-    else hotKeys = [false, false];
+    if (e.key === 'Alt' && menuKeys[0] === false) menuKeys[0] = true;
+    else if (e.key === 'm' && menuKeys[1] === false) menuKeys[1] = true;
+    else menuKeys = [false, false];
     
-    if (hotKeys[0] === true && hotKeys[1] === true) handleNav();
+    if (menuKeys[0] === true && menuKeys[1] === true) handleNav();
 })
 
 window.addEventListener('keyup', (e) => {
-    if (e.key === 'm') hotKeys = [true, false];
-    else hotKeys = [false, false];
+    if (e.key === 'm') menuKeys = [true, false];
+    else menuKeys = [false, false];
 })

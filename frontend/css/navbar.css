@@ -24,7 +24,7 @@ body {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 240px;
+  width: 60px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -286,6 +286,7 @@ body {
   -ms-flex-align: center;
   align-items: center;
   cursor: pointer;
+  display: none;
 }
 
 .handle {
@@ -296,7 +297,6 @@ body {
   background-color: #3898ec;
   color: #bfbfbf;
   transition: transform 250ms;
-  display: none;
 }
 
 .handle.top {
